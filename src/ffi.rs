@@ -38,4 +38,15 @@ extern "C" {
         filterCount: nfdfiltersize_t,
         defaultPath: *const nfdnchar_t,
     ) -> nfdresult_t;
+    pub fn NFD_SaveDialogN(
+        outPath: *mut *mut nfdnchar_t,
+        filterList: *const nfdnfilteritem_t,
+        filterCount: nfdfiltersize_t,
+        defaultPath: *const nfdnchar_t,
+        defaultName: *const nfdnchar_t,
+    ) -> nfdresult_t;
+    pub fn NFD_PickFolderN(
+        outPath: *mut *mut nfdnchar_t,
+        defaultPath: *const nfdnchar_t,
+    ) -> nfdresult_t;
 }

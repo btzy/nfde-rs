@@ -1,11 +1,10 @@
-use nfde::DialogResult;
-use nfde::Nfd;
+use nfde::*;
 
 fn main() -> Result<(), nfde::Error> {
     let nfd = Nfd::new()?;
 
     let res = nfd
-        .open_dialog()
+        .open_file()
         .add_filter("Source code", "c,cpp,cc")?
         .add_filter("Headers", "h,hpp")?
         .show();
