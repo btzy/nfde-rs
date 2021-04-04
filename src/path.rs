@@ -42,12 +42,12 @@ mod pathutil {
     use crate::ffi;
     use std::ffi::CStr;
     use std::ffi::CString;
-    use std::ffi::OsString;
+    use std::ffi::OsStr;
     use std::ops::Deref;
-    use std::os::unix::ffi::OsString;
-    use std::os::unix::ffi::OsStringExt;
+    //use std::os::unix::ffi::OsString;
+    use std::borrow::Borrow;
+    use std::os::unix::ffi::OsStrExt;
     use std::path::Path;
-    use std::path::PathBuf;
 
     pub type NfdCStr = CStr;
     pub type NfdCString = CString;
@@ -56,12 +56,12 @@ mod pathutil {
     }
     impl Drop for NfdPathBuf {
         fn drop(&mut self) {
-            unsafe { ffi::NFD_FreePathN(path) };
+            unsafe { ffi::NFD_FreePathN(self.path) };
         }
     }
     impl NfdPathBuf {
         pub fn as_path(&self) -> &Path {
-            OsString::from_bytes(unsafe { NfdCStr::from_ptr(self.path) }.to_bytes())
+            OsStr::from_bytes(unsafe { NfdCStr::from_ptr(self.path) }.to_bytes()).as_ref()
         }
     }
     impl Deref for NfdPathBuf {
