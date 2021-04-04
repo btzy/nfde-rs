@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "nfde-rs"
+name = "nfde"
 version = "0.0.1"
 dependencies = [
  "cmake",

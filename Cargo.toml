@@ -1,5 +1,5 @@
 [package]
-name = "nfde-rs"
+name = "nfde"
 version = "0.0.1"
 authors = ["Bernard Teo <btzy1996@hotmail.com>"]
 edition = "2018"

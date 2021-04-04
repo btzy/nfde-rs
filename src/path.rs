@@ -3,8 +3,7 @@ use crate::Error;
 use std::path::Path;
 use std::result::Result;
 
-const C_STRING_INTERIOR_NULL_ERROR_MESSAGE: &'static str =
-    "Cannot convert path with interior null values";
+const C_STRING_INTERIOR_NULL_ERROR_MESSAGE: &'static str = "Path has interior null values";
 
 #[cfg(target_os = "windows")]
 mod pathutil {
@@ -44,6 +43,7 @@ mod pathutil {
     use std::ffi::CStr;
     use std::ffi::CString;
     use std::ffi::OsString;
+    use std::ops::Deref;
     use std::os::unix::ffi::OsString;
     use std::os::unix::ffi::OsStringExt;
     use std::path::Path;
@@ -62,6 +62,22 @@ mod pathutil {
     impl NfdPathBuf {
         pub fn as_path(&self) -> &Path {
             OsString::from_bytes(unsafe { NfdCStr::from_ptr(self.path) }.to_bytes())
+        }
+    }
+    impl Deref for NfdPathBuf {
+        type Target = Path;
+        fn deref(&self) -> &Self::Target {
+            self.as_path()
+        }
+    }
+    impl Borrow<Path> for NfdPathBuf {
+        fn borrow(&self) -> &Path {
+            self.as_path()
+        }
+    }
+    impl AsRef<Path> for NfdPathBuf {
+        fn as_ref(&self) -> &Path {
+            self.as_path()
         }
     }
 

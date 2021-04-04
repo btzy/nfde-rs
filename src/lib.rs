@@ -90,6 +90,9 @@ impl Drop for OpenDialogBuilder {
 }
 
 fn make_filter(name: &str, spec: &str) -> Result<ffi::nfdnfilteritem_t, Error> {
+    if spec.is_empty() {
+        return Err("Filter specification is empty");
+    }
     Ok(ffi::nfdnfilteritem_t {
         name: path::str_to_native(name)?.into_raw(),
         spec: path::str_to_native(spec)?.into_raw(),
