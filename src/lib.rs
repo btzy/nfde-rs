@@ -1,6 +1,5 @@
 use std::ffi::CStr;
 use std::path::Path;
-use std::path::PathBuf;
 use std::result::Result;
 
 mod ffi;

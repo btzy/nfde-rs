@@ -6,6 +6,8 @@ edition = "2018"
 license = "Zlib"
 repository = "https://github.com/btzy/nfde-rs"
 description = "Rust bindings for Native File Dialog Extended"
+keywords = ["nativefiledialog", "native", "file", "dialog"]
+categories = ["api-bindings", "gui", "filesystem"]
 
 [build-dependencies]
 cmake = "0.1"
