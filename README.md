@@ -4,9 +4,9 @@ This package contains Rust bindings for [Native File Dialog Extended (NFDe)](htt
 
 It supports four kinds of dialogs:
 - Open file
-- Open multiple files
+- Open multiple files (under development, does not work yet)
 - Save file
-- Pick folder (under development)
+- Pick folder
 
 This package should be regarded as **experimental** for now — while upstream NFDe is stable, these Rust bindings are still in flux.
 
@@ -22,4 +22,37 @@ You might also need to place CMake on your PATH so that the build script can fin
 
 ## Basic Usage
 
-TODO
+```rust
+use nfde::*;
+
+fn main() -> Result<(), nfde::Error> {
+    // Initialize NFD... NFD will be automatically deinitialized when this object is destroyed
+    let nfd = Nfd::new()?;
+
+    // Show the dialog...
+    // Note: .show() will block until the dialog is closed
+    // You can also set a default path using .default_path(Path)
+    let res = nfd
+        .open_file()
+        .add_filter("Source code", "c,cpp,cc")?
+        .add_filter("Headers", "h,hpp")?
+        .show();
+
+    match res {
+        DialogResult::Ok(path_buf) => {
+            println!("Success!");
+            println!("Path: {}", path_buf.display());
+        }
+        DialogResult::Cancel => {
+            println!("User pressed cancel.");
+        }
+        DialogResult::Err(error_str) => {
+            println!("Error: {}", error_str);
+        }
+    };
+
+    Ok(())
+}
+```
+
+See the `/examples` directory for more examples.
