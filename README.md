@@ -1,6 +1,6 @@
 # nfde-rs
 
-This package contains Rust bindings for [Native File Dialog Extended (NFDe)](https://github.com/btzy/nativefiledialog-extended), a small library for invoking native file dialogs on Windows, MacOS, and Linux.
+This crate contains Rust bindings for [Native File Dialog Extended (NFDe)](https://github.com/btzy/nativefiledialog-extended), a small library for invoking native file dialogs on Windows, MacOS, and Linux.
 
 It supports four kinds of dialogs:
 - Open file
@@ -8,7 +8,7 @@ It supports four kinds of dialogs:
 - Save file
 - Pick folder
 
-This package should be regarded as **experimental** for now — while upstream NFDe is stable, these Rust bindings are still in flux.
+This crate should be regarded as **experimental** for now — while upstream NFDe is stable, these Rust bindings are still in flux.
 
 For more information and screenshots, please see the upstream [NFDe](https://github.com/btzy/nativefiledialog-extended) repository.
 
