@@ -12,6 +12,7 @@ pub struct NfdPathSetBuf {}
 
 pub type Error = &'static str;
 pub type InitResult = Result<Nfd, Error>;
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum DialogResult<T> {
     Ok(T),
     Cancel,
@@ -76,6 +77,23 @@ impl Drop for Nfd {
     fn drop(&mut self) {
         unsafe {
             ffi::NFD_Quit();
+        }
+    }
+}
+
+impl<T> DialogResult<T> {
+    pub fn into_result(self) -> Result<Option<T>, Error> {
+        match self {
+            DialogResult::Ok(val) => Ok(Some(val)),
+            DialogResult::Cancel => Ok(None),
+            DialogResult::Err(error) => Err(error),
+        }
+    }
+    pub fn as_result(&self) -> Result<Option<&T>, Error> {
+        match self {
+            DialogResult::Ok(val) => Ok(Some(val)),
+            DialogResult::Cancel => Ok(None),
+            DialogResult::Err(error) => Err(error),
         }
     }
 }
