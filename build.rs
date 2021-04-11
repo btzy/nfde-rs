@@ -10,14 +10,22 @@ fn main() {
     #[cfg(target_os = "windows")]
     print_windows();
 
+    #[cfg(target_os = "macos")]
+    print_macos();
+
     #[cfg(target_os = "linux")]
     print_linux();
 }
 
 #[cfg(target_os = "windows")]
 fn print_windows() {
-    println!("cargo:rustc-link-lib=ole32");
-    println!("cargo:rustc-link-lib=shell32");
+    println!("cargo:rustc-link-lib=dylib=ole32");
+    println!("cargo:rustc-link-lib=dylib=shell32");
+}
+
+#[cfg(target_os = "macos")]
+fn print_macos() {
+    println!("cargo:rustc-link-lib=framework=AppKit");
 }
 
 #[cfg(target_os = "linux")]
