@@ -1,7 +1,7 @@
 use nfde::*;
 
 // Filters for the dialog
-const filters: &[(&str, &str)] = &[("Source code", "c,cpp,cc"), ("Headers", "h,hpp")];
+const FILTERS: &[(&str, &str)] = &[("Source code", "c,cpp,cc"), ("Headers", "h,hpp")];
 
 fn main() -> Result<(), nfde::Error> {
     // Initialize NFD... NFD will be automatically deinitialized when this object is destroyed
@@ -12,7 +12,7 @@ fn main() -> Result<(), nfde::Error> {
     // instead of adding one after another; existing filters will remain present
     let res = nfd
         .open_file()
-        .add_filters(filters.into_iter().copied())?
+        .add_filters(FILTERS.into_iter().copied())?
         .show();
 
     match res {
