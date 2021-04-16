@@ -49,6 +49,9 @@ pub struct SaveFileDialogBuilder {
 pub struct PickFolderDialogBuilder {
     default_path: Option<path::NfdCString>,
 }
+unsafe impl Send for OpenFileDialogBuilder {}
+unsafe impl Send for SaveFileDialogBuilder {}
+unsafe impl Send for PickFolderDialogBuilder {}
 
 impl Nfd {
     pub fn new() -> InitResult {
@@ -229,7 +232,7 @@ fn destroy_filters(filters: &mut Vec<ffi::nfdnfilteritem_t>) {
         .for_each(|filter| destroy_filter(filter));
 }
 fn destroy_filter(filter: ffi::nfdnfilteritem_t) {
-    unsafe { path::NfdCString::from_raw(filter.spec as *mut ffi::nfdnchar_t) };
+    unsafe { path::NfdCString::from_raw(filter.spec) };
 }
 
 fn wrap_init_result(res: ffi::nfdresult_t) -> InitResult {

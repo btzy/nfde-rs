@@ -23,8 +23,8 @@ pub enum nfdresult_t {
 #[repr(C)]
 #[allow(dead_code)]
 pub struct nfdnfilteritem_t {
-    pub name: *const nfdnchar_t,
-    pub spec: *const nfdnchar_t,
+    pub name: *mut nfdnchar_t, // note: the C API actually has *const nfdnchar_t, but we use *mut to avoid const casts here
+    pub spec: *mut nfdnchar_t,
 }
 
 extern "C" {
