@@ -7,7 +7,7 @@ This crate contains Rust bindings for [Native File Dialog Extended (NFDe)](https
 
 It supports four kinds of dialogs:
 - Open file
-- Open multiple files (under development, does not work yet)
+- Open multiple files
 - Save file
 - Pick folder
 
