@@ -8,6 +8,7 @@ repository = "https://github.com/btzy/nfde-rs"
 description = "Rust bindings for Native File Dialog Extended"
 keywords = ["nativefiledialog", "native", "file", "dialog"]
 categories = ["api-bindings", "gui", "filesystem"]
+include = ["src/**/*", "README.md", "build.rs", "nativefiledialog-extended/CMakeLists.txt", "nativefiledialog-extended/LICENSE", "nativefiledialog-extended/src/**/*"]
 
 [build-dependencies]
 cmake = "0.1"
