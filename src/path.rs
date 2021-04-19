@@ -19,11 +19,19 @@ mod pathutil {
     pub type NfdCStr = U16CStr;
     pub type NfdCString = U16CString;
     pub type NfdPathBuf = PathBuf;
+    pub type NfdPathSetPathBuf = PathBuf;
 
     pub fn wrap_path(path: *mut ffi::nfdnchar_t) -> NfdPathBuf {
         //let ret = OsString::from_wide(unsafe { NfdCStr::from_ptr_str(path) }.as_slice());
         let ret = unsafe { NfdCStr::from_ptr_str(path) }.to_os_string();
         unsafe { ffi::NFD_FreePathN(path) };
+        ret.into()
+    }
+
+    pub fn wrap_pathset_path(path: *mut ffi::nfdnchar_t) -> NfdPathSetPathBuf {
+        //let ret = OsString::from_wide(unsafe { NfdCStr::from_ptr_str(path) }.as_slice());
+        let ret = unsafe { NfdCStr::from_ptr_str(path) }.to_os_string();
+        unsafe { ffi::NFD_PathSet_FreePathN(path) };
         ret.into()
     }
 
@@ -54,12 +62,26 @@ mod pathutil {
     pub struct NfdPathBuf {
         path: *mut ffi::nfdnchar_t,
     }
+    pub struct NfdPathSetPathBuf {
+        path: *mut ffi::nfdnchar_t,
+    }
+
     impl Drop for NfdPathBuf {
         fn drop(&mut self) {
             unsafe { ffi::NFD_FreePathN(self.path) };
         }
     }
+    impl Drop for NfdPathSetPathBuf {
+        fn drop(&mut self) {
+            unsafe { ffi::NFD_PathSet_FreePathN(self.path) };
+        }
+    }
     impl NfdPathBuf {
+        pub fn as_path(&self) -> &Path {
+            OsStr::from_bytes(unsafe { NfdCStr::from_ptr(self.path) }.to_bytes()).as_ref()
+        }
+    }
+    impl NfdPathSetPathBuf {
         pub fn as_path(&self) -> &Path {
             OsStr::from_bytes(unsafe { NfdCStr::from_ptr(self.path) }.to_bytes()).as_ref()
         }
@@ -70,7 +92,18 @@ mod pathutil {
             self.as_path()
         }
     }
+    impl Deref for NfdPathSetPathBuf {
+        type Target = Path;
+        fn deref(&self) -> &Self::Target {
+            self.as_path()
+        }
+    }
     impl Borrow<Path> for NfdPathBuf {
+        fn borrow(&self) -> &Path {
+            self.as_path()
+        }
+    }
+    impl Borrow<Path> for NfdPathSetPathBuf {
         fn borrow(&self) -> &Path {
             self.as_path()
         }
@@ -80,9 +113,18 @@ mod pathutil {
             self.as_path()
         }
     }
+    impl AsRef<Path> for NfdPathSetPathBuf {
+        fn as_ref(&self) -> &Path {
+            self.as_path()
+        }
+    }
 
     pub fn wrap_path(path: *mut ffi::nfdnchar_t) -> NfdPathBuf {
         NfdPathBuf { path }
+    }
+
+    pub fn wrap_pathset_path(path: *mut ffi::nfdnchar_t) -> NfdPathSetPathBuf {
+        NfdPathSetPathBuf { path }
     }
 
     pub fn unwrap_path(path: &Path) -> Result<NfdCString, super::Error> {
@@ -97,9 +139,14 @@ mod pathutil {
 
 pub use pathutil::NfdCString;
 pub use pathutil::NfdPathBuf;
+pub use pathutil::NfdPathSetPathBuf;
 
 pub fn wrap_path(path: *mut ffi::nfdnchar_t) -> NfdPathBuf {
     pathutil::wrap_path(path)
+}
+
+pub fn wrap_pathset_path(path: *mut ffi::nfdnchar_t) -> NfdPathSetPathBuf {
+    pathutil::wrap_pathset_path(path)
 }
 
 pub fn unwrap_path(path: &Path) -> Result<NfdCString, Error> {
