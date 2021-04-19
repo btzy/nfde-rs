@@ -1,5 +1,8 @@
 # nfde-rs
 
+![GitHub CI Build](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+![Crates.io](https://img.shields.io/crates/v/nfde)
+
 This crate contains Rust bindings for [Native File Dialog Extended (NFDe)](https://github.com/btzy/nativefiledialog-extended), a small library for invoking native file dialogs on Windows, MacOS, and Linux.
 
 It supports four kinds of dialogs:
