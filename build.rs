@@ -26,6 +26,7 @@ fn print_windows() {
 #[cfg(target_os = "macos")]
 fn print_macos() {
     println!("cargo:rustc-link-lib=framework=AppKit");
+    println!("cargo:rustc-link-lib=framework=UniformTypeIdentifiers");
 }
 
 #[cfg(target_os = "linux")]
