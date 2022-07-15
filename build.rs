@@ -27,8 +27,6 @@ fn print_windows() {
 fn print_macos() {
     println!("cargo:rustc-link-lib=framework=AppKit");
     println!("cargo:rustc-link-lib=framework=UniformTypeIdentifiers");
-    // Needed by ___isPlatformVersionAtLeast, which is emitted by the @available macro
-    println!("cargo:rustc-link-arg=-fapple-link-rtlib");
 }
 
 #[cfg(target_os = "linux")]
