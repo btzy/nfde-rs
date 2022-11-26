@@ -35,6 +35,19 @@ jobs:
     - name: Build
       run: cargo build --all-targets
   
+  build-macos-10-15:
+
+    name: MacOS 10.15
+    runs-on: macos-10.15
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+    - name: Build
+      run: cargo build --all-targets
+  
   build-windows:
 
     name: Windows
