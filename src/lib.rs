@@ -33,7 +33,7 @@ pub trait MultipleFileDialogBuilder {
 }
 
 pub trait DefaultPathDialogBuilder {
-    fn default_path<'a, P: AsRef<Path>>(&'a mut self, path: &P) -> Result<&'a mut Self, Error>;
+    fn default_path<'a, P: AsRef<Path>>(&'a mut self, path: P) -> Result<&'a mut Self, Error>;
 }
 
 pub trait FilterableDialogBuilder {
@@ -118,25 +118,25 @@ impl<T> DialogResult<T> {
 }
 
 impl DefaultPathDialogBuilder for OpenFileDialogBuilder {
-    fn default_path<'a, P: AsRef<Path>>(&'a mut self, path: &P) -> Result<&'a mut Self, Error> {
+    fn default_path<'a, P: AsRef<Path>>(&'a mut self, path: P) -> Result<&'a mut Self, Error> {
         self.default_path = Some(path::unwrap_path(path.as_ref())?);
         Ok(self)
     }
 }
 impl DefaultPathDialogBuilder for OpenFileMultipleDialogBuilder {
-    fn default_path<'a, P: AsRef<Path>>(&'a mut self, path: &P) -> Result<&'a mut Self, Error> {
+    fn default_path<'a, P: AsRef<Path>>(&'a mut self, path: P) -> Result<&'a mut Self, Error> {
         self.default_path = Some(path::unwrap_path(path.as_ref())?);
         Ok(self)
     }
 }
 impl DefaultPathDialogBuilder for SaveFileDialogBuilder {
-    fn default_path<'a, P: AsRef<Path>>(&'a mut self, path: &P) -> Result<&'a mut Self, Error> {
+    fn default_path<'a, P: AsRef<Path>>(&'a mut self, path: P) -> Result<&'a mut Self, Error> {
         self.default_path = Some(path::unwrap_path(path.as_ref())?);
         Ok(self)
     }
 }
 impl DefaultPathDialogBuilder for PickFolderDialogBuilder {
-    fn default_path<'a, P: AsRef<Path>>(&'a mut self, path: &P) -> Result<&'a mut Self, Error> {
+    fn default_path<'a, P: AsRef<Path>>(&'a mut self, path: P) -> Result<&'a mut Self, Error> {
         self.default_path = Some(path::unwrap_path(path.as_ref())?);
         Ok(self)
     }
