@@ -20,6 +20,7 @@ fn main() {
 #[cfg(target_os = "windows")]
 fn print_windows() {
     println!("cargo:rustc-link-lib=dylib=ole32");
+    println!("cargo:rustc-link-lib=dylib=uuid");
     println!("cargo:rustc-link-lib=dylib=shell32");
 }
 
