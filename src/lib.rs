@@ -287,7 +287,7 @@ fn destroy_filters(filters: &mut Vec<ffi::nfdnfilteritem_t>) {
         .for_each(|filter| destroy_filter(filter));
 }
 fn destroy_filter(filter: ffi::nfdnfilteritem_t) {
-    unsafe { path::NfdCString::from_raw(filter.spec) };
+    let _ = unsafe { path::NfdCString::from_raw(filter.spec) };
 }
 
 fn wrap_init_result(res: ffi::nfdresult_t) -> InitResult {

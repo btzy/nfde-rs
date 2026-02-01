@@ -1,6 +1,6 @@
 [package]
 name = "nfde"
-version = "0.0.8"
+version = "0.0.9"
 authors = ["Bernard Teo <btzy1996@hotmail.com>"]
 edition = "2018"
 license = "Zlib"
@@ -15,4 +15,4 @@ cmake = "0.1"
 pkg-config = "0.3"
 
 [target.'cfg(windows)'.dependencies]
-widestring = "1.0"
+widestring = "1.2"

@@ -2,7 +2,9 @@ use cmake;
 extern crate pkg_config;
 
 fn main() {
-    let dst = cmake::Config::new("nativefiledialog-extended").build();
+    let dst = cmake::Config::new("nativefiledialog-extended")
+        .define("NFD_BUILD_TESTS", "OFF")
+        .build();
 
     println!("cargo:rustc-link-search=native={}/lib", dst.display());
     println!("cargo:rustc-link-lib=static=nfd");
